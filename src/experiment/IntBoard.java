@@ -15,6 +15,11 @@ public class IntBoard {
 	}
 	
 	//Getter
+	getCell(int x, int y) {
+		
+	}
+	
+	//Getter
 	Set<BoardCell> getAdjList() {
 	
 		return;
