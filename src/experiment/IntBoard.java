@@ -5,6 +5,7 @@ import java.util.*;
  * 
  * 
  * @author Calvin Mak
+ * Date: 3/1/2018
  *
  */
 
@@ -31,7 +32,12 @@ public class IntBoard {
 	
 	//Default Constructor
 	IntBoard() {
+		gameSetting = Setting.STREAMLOAD;
 		calcAdjacencies();
+	}
+	
+	IntBoard(char c) {
+		setSetting(c);
 	}
 	
 	//Calculates the Adjacency list for each grid Cell and stores results in a map
@@ -50,8 +56,14 @@ public class IntBoard {
 	}
 	
 	//Calculates targets that are pathLength distance from the startCell. The list of targets are stored as a Set in a variable.
-	void calcTargets(int startCell, int pathLength) {
+	void calcTargets(BoardCell startCell, int pathLength) {
 		
+	}
+	
+	//Game Options
+	void setSetting(char c) {
+		if (c == 'p') { gameSetting = Setting.PRELOAD; }
+		else { gameSetting = Setting.STREAMLOAD; }
 	}
 	
 	//Returns a list of targets as a set
@@ -59,10 +71,13 @@ public class IntBoard {
 		return targets;
 	}
 	
+	enum Setting { PRELOAD, STREAMLOAD }; //Do I want to pre-calculate the map or calculate it after each move.	
+
 	//Adjacent Matrix
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
+	//private Map<int, Set<BoardCell>> TotalTargets;
 	private BoardCell cell;			//Keeps track of current cell
-	
+	private Setting gameSetting;	
 }
