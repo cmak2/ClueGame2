@@ -25,8 +25,11 @@ public class IntBoardTests {
 	
 	@Test
 	public void testSize() {
-		BoardCell Cell = board.getCell(0,0);
+		BoardCell Cell = board.getGrid(0,0);
 		Set<BoardCell> testList = board.getAdjList(Cell);
+		assertTrue(testList.contains(board.getCell(1, 0)));
+		assertTrue(testList.contains(board.getCell(0, 1)));
+		assertEquals(2, testList.size());
 		
 	}
 	
