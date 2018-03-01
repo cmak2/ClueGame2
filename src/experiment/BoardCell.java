@@ -1,9 +1,18 @@
 package experiment;
 
-public class BoardCell {
+/**
+ * 
+ * @author Calvin Mak
+ *
+ */
 
+/*
+ * 
+ * Represents a cell on the game board
+ * 
+ */
+
+public class BoardCell {
 	int row;
 	int column;
-	
-	private BoardCell[][] grid;	
 }
