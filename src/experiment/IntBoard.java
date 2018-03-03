@@ -74,7 +74,8 @@ public class IntBoard {
 	
 	//Getter
 	BoardCell getCell(int x, int y) {
-		return cell;
+		BoardCell checkCell = new BoardCell(x,y);
+		return checkCell;
 	}
 	
 	//Getter
