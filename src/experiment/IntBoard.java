@@ -116,7 +116,7 @@ public class IntBoard {
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
-	private BoardCell[][] grid;		//The Board Grid
+	private BoardCell[3][3] grid;		//The Board Grid
 	//private Map<int, Set<BoardCell>> TotalTargets;
 	private BoardCell cell;			//Keeps track of current cell
 	private Setting gameSetting;	
