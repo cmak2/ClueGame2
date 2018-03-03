@@ -35,7 +35,7 @@ public class IntBoardTests {
 	
 	
 	/**
-	 * Testing Targets
+	 * Testing Adjacent lists (but called it targets)
 	 */
 	
 	//TL Means top left
@@ -104,6 +104,66 @@ public class IntBoardTests {
 		assertEquals(4, testList.size());
 	}
 	
+	@Test
+	public void testTargets1() {
+		BoardCell cell = board.getCell(0,0);
+		board.calcTargets(cell,3);
+		Set targets = board.getTargets();
+		assertEquals(6, targets.size());
+		assertTrue(targets.contains(board.getCell(3,0)));
+	}
+	public void testTargets2() {
+		BoardCell cell = board.getCell(1,0);
+		board.calcTargets(cell,1);
+		Set targets = board.getTargets();
+		assertTrue(targets.contains(board.getCell(1,1)));
+	}
+	
+	public void testTargets3() {
+		BoardCell cell = board.getCell(4,1);
+		board.calcTargets(cell,3);
+		Set targets = board.getTargets();
+		assertEquals(0, targets.size());
+	}
+	
+	public void testTargets4() {
+		BoardCell cell = board.getCell(1,1);
+		board.calcTargets(cell,2);
+		Set targets = board.getTargets();
+		assertTrue(targets.contains(board.getCell(0,0));
+		assertTrue(targets.contains(board.getCell(3,1));
+	}
+	
+	public void testTargets5() {
+		BoardCell cell = board.getCell(3,0);
+		board.calcTargets(cell,5);
+		Set targets = board.getTargets();
+		assertTrue(targets.contains(board.getCell(0,2));
+		assertTrue(targets.contains(board.getCell(1,3));
+	}
+	
+	
+	public void testTargets6() {
+		BoardCell cell = board.getCell(2,2);
+		board.calcTargets(cell,1);
+		Set targets = board.getTargets();
+		assertEquals(4, targets.size());
+		assertTrue(targets.contains(board.getCell(1,2));
+		assertTrue(targets.contains(board.getCell(2,3));
+		assertTrue(targets.contains(board.getCell(3,2));
+		assertTrue(targets.contains(board.getCell(2,1));
+	}
+	
+	public void testTargets7() {
+		BoardCell cell = board.getCell(0,1);
+		board.calcTargets(cell,3);
+		Set targets = board.getTargets();
+		assertTrue(targets.contains(board.getCell(3,1));
+		assertTrue(targets.contains(board.getCell(1,3));
+		assertTrue(targets.contains(board.getCell(2,2));
+		assertTrue(targets.contains(board.getCell(2,0));
+	}
+	
 	private IntBoard board;
 	
 	//Main method
@@ -116,5 +176,12 @@ public class IntBoardTests {
 		testTargetsLE();
 		testTargetsSCM();
 		testTargetsSFLC();
+		testTargets1();
+		testTargets2();
+		testTargets3();
+		testTargets4();
+		testTargets5();
+		testTargets6();
+		testTargets7();
 	}
 }
