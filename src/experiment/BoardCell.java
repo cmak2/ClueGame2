@@ -13,6 +13,10 @@ package experiment;
  */
 
 public class BoardCell {
+	BoardCell(int r, int c) {
+		row = r;
+		column = c;
+	}
 	int row;
 	int column;
 }
