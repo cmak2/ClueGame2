@@ -74,5 +74,56 @@ public class IntBoardTests {
 		
 	}
 	
+	//Targets
+	
+	@Test
+	public void testTargets1() {
+		
+	}
+	public void testTargets2() {
+	
+	}
+	
+	public void testTargets3() {
+		
+	}
+	
+	public void testTargets4() {
+		
+	}
+	
+	public void testTargets5() {
+		
+	}
+	
+	
+	public void testTargets6() {
+		
+	}
+	
+	public void testTargets7() {
+		
+	}
+	
 	private IntBoard board;
+	
+	//Main method
+	public static void main(String[] args) {
+		makeBoard();
+		//Tests
+		testTargetsTL();
+		testTargetsBRC();
+		testTargetsRE();
+		testTargetsLE();
+		testTargetsSCM();
+		testTargetsSFLC();
+		testTargets1();
+		testTargets2();
+		testTargets3();
+		testTargets4();
+		testTargets5();
+		testTargets6();
+		testTargets7();
+	}
+}
 }
