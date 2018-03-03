@@ -126,4 +126,4 @@ public class IntBoardTests {
 		testTargets7();
 	}
 }
-}
+
