@@ -1,0 +1,15 @@
+B, Bedroom, Card
+D, Dining room, Card
+G, Guest Room, Card
+H, Hall, Card
+K, Kitchen
+L, Living Room, Card
+M, Library, Card
+O, Office, Card
+R, Recreation Room, Card
+S, Study Room, Card
+V, Washroom/Bathroom, Card
+W, Walkway, Other
+Y, Laundry Room, Other
+X, Closet, Other
+
