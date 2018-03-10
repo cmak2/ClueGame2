@@ -64,6 +64,11 @@ public class Board {
 	}
 	
 	//Getters for JUnit testing
+	
+	public BoardCell getCell(int r, int c) {
+		return new BoardCell(r, c);
+	}
+	
 	public int getNumRows() {		//Returns the number of rows
 		return numRows;
 	}
@@ -84,6 +89,14 @@ public class Board {
 		return targets;
 	}
 	
+	public int getDoors() {
+		return numDoors;
+	}
+	
+	public void incDoors() {
+		numDoors++;
+	}
+	
 	
 	//Creates constructor
 	private Board() {}
@@ -95,6 +108,7 @@ public class Board {
 	//Private Variables and Datastructures
 	private int numRows;
 	private int numColumns;
+	private int numDoors;				//For Testing
 
 	private static Board boardz;
 	private BoardCell board;

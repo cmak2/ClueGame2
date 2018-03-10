@@ -18,11 +18,7 @@ public class BoardCell {
 	BoardCell(int r, int c) {
 		row = r;
 		column = c;
-	}
-	BoardCell getCell(int r, int c) {
-		return new BoardCell(r,c);
-	}
-	
+	}	
 	
 	//Methods
 	public boolean isWalkway() {	//Is it a walkway?
