@@ -15,7 +15,7 @@ import java.util.*;
  * Board class.
  * Contains only one instance of the gameboard. Therefore, the singleton method is used.
  * Max size is an estimate to allocate however much memory will be needed for the gameboard.
- * 
+ * Framework
  * 
  */
 
