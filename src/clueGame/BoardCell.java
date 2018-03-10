@@ -13,6 +13,8 @@ package clueGame;
  */
 
 public class BoardCell {
+	
+	//Constructors
 	BoardCell(int r, int c) {
 		row = r;
 		column = c;
@@ -20,6 +22,28 @@ public class BoardCell {
 	BoardCell getCell(int r, int c) {
 		return new BoardCell(r,c);
 	}
+	
+	
+	//Methods
+	public boolean isWalkway() {	//Is it a walkway?
+		
+		return true;
+	}
+	
+	public boolean isRoom() {		//Is it a room?
+		
+		return true;
+	}
+	
+	public boolean isDoorway() {    //Is it a Doorway?
+		
+		return true;
+	}
+	
+	
+	//Variables
+	
 	int row;
 	int column;
+	char initial;	//From Legend
 }
