@@ -69,7 +69,7 @@ class ClueGameTest_File {
 		door = board.getCell(20, 21);
 		assertEquals(DoorDirection.UP, door.getDoorDir());
 		door = board.getCell(23, 3);
-		assertTrue(door.isDoorway());
+		assertFalse(door.isDoorway());
 		door = board.getCell(14, 7);
 		assertNotEquals(door.getDoorDir(), board.getCell(7, 13).getDoorDir());
 		assertEquals(door.getDoorDir(), board.getCell(7,15).getDoorDir());
@@ -82,7 +82,23 @@ class ClueGameTest_File {
 	
 	@Test
 	public void testCells() {
-		
+		BoardCell door = board.getCell(23, 3);
+		assertTrue(door.isDoorway());
+		assertEquals('W', door.getInitial());
+		door = board.getCell(21,8);
+		assertEquals('L', door.getInitial());
+		assertEquals(door.getInitial(), board.getCell(21, 7).getInitial());
+		door = board.getCell(29, 29);
+		assertEquals('V', door.getInitial());
+		door = board.getCell(30, 30);
+		assertNull(door.getInitial());
+		door = board.getCell(8,7);
+		assertEquals('X', door.getInitial());
+		door = board.getCell(26,12);
+		assertEquals('H', door.getInitial());
+		door = board.getCell(0,0);
+		assertEquals('G', door.getInitial());
+		assertEquals(board.getCell(14, 6).getInitial(), board.getCell(14,11));
 	}
 
 	

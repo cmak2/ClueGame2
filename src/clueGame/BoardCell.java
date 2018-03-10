@@ -40,6 +40,10 @@ public class BoardCell {
 		return null;
 	}
 	
+	public char getInitial() {
+		return initial;
+	}
+	
 	//Variables
 	
 	int row;
