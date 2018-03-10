@@ -36,6 +36,9 @@ public class BoardCell {
 		return true;
 	}
 	
+	public DoorDirection getDoorDir() {	//What Direction
+		return null;
+	}
 	
 	//Variables
 	
