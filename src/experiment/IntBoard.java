@@ -33,6 +33,7 @@ public class IntBoard {
 	//Default Constructor
 	IntBoard() {
 		gameSetting = Setting.STREAMLOAD;
+		grid = new BoardCell[3][3];
 		calcAdjacencies();
 		init();
 	}
@@ -47,7 +48,7 @@ public class IntBoard {
 	
 	//Calculates the Adjacency list for each grid Cell and stores results in a map
 	void calcAdjacencies() {
-		Set<BoardCell> adjList;
+		Set<BoardCell> adjList = null;
 		
 		if (cell.row - 1 >= 0 && cell.row - 1 < grid.length) {			//All columns will have same max length so 0 is ok for a default value
 			if (cell.column - 1 >= 0 && cell.column - 1 < grid[0].length) {
@@ -61,15 +62,15 @@ public class IntBoard {
 		}
 		if (cell.row + 1 >= 0 && cell.row + 1 < grid.length) {			//All columns will have same max length so 0 is ok for a default value
 			if (cell.column - 1 >= 0 && cell.column - 1 < grid[0].length) {
-				BoardCell cell2 = new BoardCell();
-				adjList.add(cell2[cell.row + 1][cell.column - 1]);
+				BoardCell cell2 = new BoardCell(cell.row + 1, cell.column - 1);
+				adjList.add(cell2);
 			}
 			if (cell.column + 1 >= 0 && cell.column + 1 < grid[0].length) {
 				BoardCell cell2 = new BoardCell(cell.row + 1, cell.column + 1);
 				adjList.add(cell2);
 			}
 		}
-		
+		adjMatrix.put(cell,adjList);
 	}
 	
 	//Getter
@@ -85,8 +86,8 @@ public class IntBoard {
 	
 	//Calculates targets that are pathLength distance from the startCell. The list of targets are stored as a Set in a variable.
 	void calcTargets(BoardCell startCell, int pathLength) {
-		for (i = (startCell.row - pathLength); i < (startCell.row + pathLength); i++) {	//Will scan a 2*pathlength * 2 * pathlength grid. 
-			for (j = (startCell.column - pathLength); j < (startCell.column + pathLength); j++) {
+		for (int i = (startCell.row - pathLength); i < (startCell.row + pathLength); i++) {	//Will scan a 2*pathlength * 2 * pathlength grid. 
+			for (int j = (startCell.column - pathLength); j < (startCell.column + pathLength); j++) {
 				if (i >= 0 && i < grid.length) {		//Constrains to within the Board Grid
 					if (j >= 0 && j > grid.length) {
 						if ((i - startCell.row) + (j - startCell.column) == pathLength) { //If distance from cell = pathlength, it is a target.
@@ -116,7 +117,7 @@ public class IntBoard {
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
-	private BoardCell[3][3] grid;		//The Board Grid
+	private BoardCell[][] grid;		//The Board Grid
 	//private Map<int, Set<BoardCell>> TotalTargets;
 	private BoardCell cell;			//Keeps track of current cell
 	private Setting gameSetting;	

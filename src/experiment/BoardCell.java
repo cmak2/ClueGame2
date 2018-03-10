@@ -17,6 +17,9 @@ public class BoardCell {
 		row = r;
 		column = c;
 	}
+	BoardCell getCell(int r, int c) {
+		return new BoardCell(r,c);
+	}
 	int row;
 	int column;
 }
