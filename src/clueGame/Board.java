@@ -22,6 +22,8 @@ import java.util.*;
 public class Board {
 	
 	//public methods
+	
+	//Singleton
 	public static Board getInstance() {
 		if (boardz == null) {
 			boardz = new Board();
@@ -29,10 +31,22 @@ public class Board {
 		return boardz;
 	}
 	
-	public void initialize() {
+	//Initialize
+	public void initialize() {	
 		
 	}
 	
+	//Get filenames
+	public void setBoardConfig(String filename) {
+		boardConfigFile = filename;
+	}
+	
+	public void setRoomConfig(String filename) {
+		roomConfigFile = filename;
+	}
+	
+	
+	//Process Files
 	public void loadRoomConfig() {
 		
 	}
@@ -49,6 +63,15 @@ public class Board {
 		
 	}
 	
+	//Getters
+	public int getNumRows() {		//Returns the number of rows
+		return numRows;
+	}
+	
+	public int getNumColumns() {
+		return numColumns;
+	}
+	
 	//Creates constructor
 	private Board() {}
 
@@ -57,14 +80,14 @@ public class Board {
 	public static final int MAX_BOARD_SIZE = 50;		//50 x 50 gameboard
 	
 	//Private Variables and Datastructures
-	private static final int NUM_ROWS;
-	private static final int NUM_COLUMNS;
+	private int numRows;
+	private int numColumns;
 
 	private static Board boardz;
 	private BoardCell board;
 	private Map<Character, String> legend;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
-	private String boardConfigFile;
-	private String roomConfigFile;
+	private String boardConfigFile;		//Game Board
+	private String roomConfigFile;		//Legend
 }
