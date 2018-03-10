@@ -11,7 +11,7 @@ import experiment.IntBoard;
 
 /**
  * 
- * @author Calvin Mak
+ * @author 
  * Description: Testing ClueGame
  * 
  */
