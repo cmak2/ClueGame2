@@ -63,7 +63,7 @@ public class Board {
 		
 	}
 	
-	//Getters
+	//Getters for JUnit testing
 	public int getNumRows() {		//Returns the number of rows
 		return numRows;
 	}
@@ -71,6 +71,19 @@ public class Board {
 	public int getNumColumns() {
 		return numColumns;
 	}
+	
+	public Map<Character, String> getLegend() {
+		return legend;
+	}
+	
+	public Map<BoardCell, Set<BoardCell>> getadjMat() {
+		return adjMatrix;
+	}
+	
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
+	
 	
 	//Creates constructor
 	private Board() {}

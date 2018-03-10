@@ -27,10 +27,16 @@ class ClueGameTest_File {
 	}
 	
 	@Test
+	public void testLegend() {
+		Map<Character, String> legend = Board.getLegend();
+	}
+	
+	@Test
 	public void testBoardDimensions() {
 		assertEquals(NUMROWS, board.getNumRows());
 		assertEquals(NUMCOLUMNS, board.getNumColumns());
 	}
+	
 
 	
 }
