@@ -51,6 +51,8 @@ public class Board {
 		roomConfigFile = filename2;					//Legend
 	}
 	
+	
+	//TODO: Figure out how to check MaxRows/MaxColumns
 	//Process Files
 	public void loadRoomConfig() throws BadConfigFormatException {
 		
@@ -60,10 +62,31 @@ public class Board {
 		String splitString = ",";
 		int _row = 0;
 		int _column = 0;
+		
+		//A check method to make sure it loaded correctly,
+		int maxRows = 0;
+		int maxColumns = 0;							
+		int currentMaxRow;
+		int currentMaxCol;
+		
+		// String Parser
 		try {
+			
 			br = new BufferedReader(new FileReader(boardConfigFile));
 			while ((ln = br.readLine()) != null) {
 				String[] Rooms = ln.split(splitString);
+				currentMaxCol = Rooms.length - 1;
+				
+				if (maxColumns == 0) { maxColumns = currentMaxCol; }
+				if (maxColumns != currentMaxCol) {
+					throw new BadConfigFormatException("Error Loading Game Board Data");
+				}
+				
+				for (_column = 0; _column < Rooms.length - 1; _column++) {			//Last Row and Column are numbers
+					BoardCell cell = new BoardCell(_row, _column, Rooms[_column]);
+					grid[_row][_column] = cell;
+				}
+				
 				_row++;
 			}
 		} catch (FileNotFoundException e) {
@@ -99,11 +122,11 @@ public class Board {
 	//Getters for JUnit testing
 	
 	public BoardCell getCell(int r, int c) {
-		return new BoardCell(r, c);
+		return grid[r][c];
 	}
 	
 	public BoardCell getCellAt(int r, int c) {	//Duplicate Method to Pass other tests
-		return new BoardCell(r, c);
+		return grid[r][c];
 	}
 	
 	public Set<BoardCell> getTargets() {
