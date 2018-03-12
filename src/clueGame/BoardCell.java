@@ -15,14 +15,20 @@ package clueGame;
 public class BoardCell {
 	
 	//Constructors
+	BoardCell(int r, int c, String i) {
+		row = r;
+		column = c;
+		initial = i;
+	}	
+	
 	BoardCell(int r, int c) {
 		row = r;
 		column = c;
-	}	
+	}
 	
 	//Methods
 	public boolean isWalkway() {	//Is it a walkway?
-		if (initial.charAt(0) == 'W') 
+		if (initial.charAt(0) == 'W')
 			return true;
 		return false;
 	}

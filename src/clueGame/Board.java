@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.*;
 import java.util.*;
+import java.io.*;
 
 /**
  * 
@@ -47,12 +48,31 @@ public class Board {
 	
 	public void setConfigFiles(String filename, String filename2) {
 		boardConfigFile = filename;					//CSV
-		roomConfigFile = filename2;
+		roomConfigFile = filename2;					//Legend
 	}
 	
 	//Process Files
-	public void loadRoomConfig() {
+	public void loadRoomConfig() throws BadConfigFormatException {
 		
+		//Code replicated from https://www.mkyong.com Formal Citation at the Bottom
+		BufferedReader br;
+		String ln;
+		String splitString = ",";
+		int _row = 0;
+		int _column = 0;
+		try {
+			br = new BufferedReader(new FileReader(boardConfigFile));
+			while ((ln = br.readLine()) != null) {
+				
+				_row++;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new BadConfigFormatException("File Not Found");		//Log Exception
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new BadConfigFormatException("IOException");			//Log Exception
+		}
 	}
 	
 	public void loadBoardConfig() {
@@ -119,6 +139,16 @@ public class Board {
 	private Map<Character, String> legend;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
+	private BoardCell[][] grid;			//Game Board Grid Array. BoardCells have an initial from the legend and r,c which are corresponding rows and/or columns.
 	private String boardConfigFile;		//Game Board
 	private String roomConfigFile;		//Legend
 }
+
+
+/*
+Works Cited:
+[1] mkyong. "How to read and parse CSV file in Java". Mkyong.com. April 25, 2013. Obtained March 7, 2017. https://www.mkyong.com/java/how-to-read-and-parse-csv-file-in-java/.
+
+
+		
+*/
