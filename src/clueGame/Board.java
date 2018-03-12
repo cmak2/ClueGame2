@@ -45,6 +45,10 @@ public class Board {
 		roomConfigFile = filename;
 	}
 	
+	public void setConfigFiles(String filename, String filename2) {
+		boardConfigFile = filename;					//CSV
+		roomConfigFile = filename2;
+	}
 	
 	//Process Files
 	public void loadRoomConfig() {

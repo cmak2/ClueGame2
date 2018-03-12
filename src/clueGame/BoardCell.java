@@ -40,7 +40,11 @@ public class BoardCell {
 		return null;
 	}
 	
-	public char getInitial() {
+	public DoorDirection getDoorDirection() {
+		
+	}
+	
+	public String getInitial() {
 		return initial;
 	}
 	
@@ -48,5 +52,5 @@ public class BoardCell {
 	
 	int row;
 	int column;
-	char initial;	//From Legend
+	String initial;	//From Legend
 }

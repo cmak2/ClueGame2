@@ -9,6 +9,8 @@ import java.util.*;
 import experiment.BoardCell;
 import experiment.IntBoard;
 
+import clueGame.Board;
+import clueGame.BoardCell
 /**
  * 
  * @author 
