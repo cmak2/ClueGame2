@@ -6,11 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.*;
 
-import experiment.BoardCell;
 import experiment.IntBoard;
 
 import clueGame.Board;
-import clueGame.BoardCell
+import clueGame.BoardCell;
 /**
  * 
  * @author 
@@ -23,7 +22,7 @@ import clueGame.BoardCell
 public class IntBoardTest {
 	@Before
 	public void makeBoard() {
-		board = new IntBoard();
+		board = Board.getInstance();
 	}
 	
 	//@Test
@@ -167,5 +166,5 @@ public class IntBoardTest {
 		assertTrue(targets.contains(board.getCell(2,0)));
 	}
 	
-	private IntBoard board;
+	private static Board board;
 }

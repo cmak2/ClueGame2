@@ -55,7 +55,7 @@ public class Board {
 	public void loadRoomConfig() throws BadConfigFormatException {
 		
 		//Code replicated from https://www.mkyong.com Formal Citation at the Bottom
-		BufferedReader br;
+		BufferedReader br = null;
 		String ln;
 		String splitString = ",";
 		int _row = 0;
@@ -63,7 +63,7 @@ public class Board {
 		try {
 			br = new BufferedReader(new FileReader(boardConfigFile));
 			while ((ln = br.readLine()) != null) {
-				
+				String[] Rooms = ln.split(splitString);
 				_row++;
 			}
 		} catch (FileNotFoundException e) {
@@ -72,6 +72,15 @@ public class Board {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new BadConfigFormatException("IOException");			//Log Exception
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+					throw new BadConfigFormatException("IOException: Failed to close file.");
+				}
+			}
 		}
 	}
 	
