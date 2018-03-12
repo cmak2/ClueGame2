@@ -102,6 +102,18 @@ public class Board {
 		return new BoardCell(r, c);
 	}
 	
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
+	
+	public Set<BoardCell> getAdjList(BoardCell cell) {
+		return adjMatrix.get(cell);
+	}
+	
+	public int getDoors() {
+		return numDoors;
+	}
+	
 	public int getNumRows() {		//Returns the number of rows
 		return numRows;
 	}
@@ -116,14 +128,6 @@ public class Board {
 	
 	public Map<BoardCell, Set<BoardCell>> getadjMat() {
 		return adjMatrix;
-	}
-	
-	public Set<BoardCell> getTargets() {
-		return targets;
-	}
-	
-	public int getDoors() {
-		return numDoors;
 	}
 	
 	public void incDoors() {
