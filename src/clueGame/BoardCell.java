@@ -22,18 +22,21 @@ public class BoardCell {
 	
 	//Methods
 	public boolean isWalkway() {	//Is it a walkway?
-		
-		return true;
+		if (initial.charAt(0) == 'W') 
+			return true;
+		return false;
 	}
 	
 	public boolean isRoom() {		//Is it a room?
-		
-		return true;
+		if (initial.charAt(0) != 'W')
+			return true;
+		return false;
 	}
 	
 	public boolean isDoorway() {    //Is it a Doorway?
-		
-		return true;
+		if (initial.charAt(1) == 'U' || initial.charAt(1) == 'L' || initial.charAt(1) == 'R' || initial.charAt(1) == 'D')
+			return true;
+		return false;
 	}
 	
 	public DoorDirection getDoorDir() {	//What Direction
