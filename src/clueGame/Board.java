@@ -102,6 +102,10 @@ public class Board {
 		return new BoardCell(r, c);
 	}
 	
+	public BoardCell getCellAt(int r, int c) {	//Duplicate Method to Pass other tests
+		return new BoardCell(r, c);
+	}
+	
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
