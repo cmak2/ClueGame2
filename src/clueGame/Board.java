@@ -4,6 +4,8 @@ import java.awt.*;
 import java.util.*;
 import java.io.*;
 
+import tests.*;
+
 /**
  * 
  * @author 
@@ -77,17 +79,20 @@ public class Board {
 				String[] Rooms = ln.split(splitString);
 				currentMaxCol = Rooms.length - 1;
 				
-				if (maxColumns == 0) { maxColumns = currentMaxCol; }
+				if (maxColumns == 0) { maxColumns = currentMaxCol; numColumns = maxColumns;}
 				if (maxColumns != currentMaxCol) {
+					
 					throw new BadConfigFormatException("Error Loading Game Board Data");
 				}
 				
 				for (_column = 0; _column < Rooms.length - 1; _column++) {			//Last Row and Column are numbers
 					BoardCell cell = new BoardCell(_row, _column, Rooms[_column]);
 					grid[_row][_column] = cell;
+					System.out.println(_row + " " +_column);
 				}
 				
 				_row++;
+				
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -105,6 +110,7 @@ public class Board {
 				}
 			}
 		}
+		numRows = _row;
 	}
 	
 	public void loadBoardConfig() throws BadConfigFormatException,FileNotFoundException {
