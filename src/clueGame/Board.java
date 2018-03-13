@@ -222,6 +222,20 @@ public class Board {
 		recursiveCalcTargets(visitedT, pathLength, cell);
 	}
 	
+	public void calcTargets(int r, int c, int pathLength) {
+		Set<BoardCell> visitedT = null;
+		//Use an algorithm of deduction and reduction. Stick to same initial unless there is a door.
+		//Start at the cell and branch out from each cardinal direction.
+		BoardCell cell = grid[r][c];
+		visitedT.add(cell);
+		//Check adjacency list of the cell, adjacency list will pre-filter rooms/walkways
+		if (pathLength < 1) {
+			System.out.println("Invalid pathLength");
+			return;
+		}
+		recursiveCalcTargets(visitedT, pathLength, cell);
+	}
+	
 	public void recursiveCalcTargets(Set<BoardCell> visit, int pathLength, BoardCell cell) { 		//Recursive method that calculates all the final targets
 		if (pathLength == 0) { System.out.println("Target Complete."); targets.add(cell); return; } //End of path, add target cell to targets Also the base case
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() + 1, cell.getColumn()))) {
@@ -273,6 +287,11 @@ public class Board {
 	}
 	
 	public Set<BoardCell> getAdjList(BoardCell cell) {
+		return adjMatrix.get(cell);
+	}
+	
+	public Set<BoardCell> getAdjList(int r, int c) {
+		BoardCell cell = grid[r][c];
 		return adjMatrix.get(cell);
 	}
 	
