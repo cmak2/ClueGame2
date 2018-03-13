@@ -176,9 +176,9 @@ public class Board {
 
 	private static Board boardz;
 	private BoardCell board;
-	private Map<Character, String> legend;
-	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private Set<BoardCell> targets;
+	private Map<Character, String> legend;            //Initial to Room Map
+	private Map<BoardCell, Set<BoardCell>> adjMatrix; //All the adjacent spaces given a boardcell
+	private Set<BoardCell> targets;			//Calculates Targets in real-time based on the PathLength
 	private BoardCell[][] grid;			//Game Board Grid Array. BoardCells have an initial from the legend and r,c which are corresponding rows and/or columns.
 	private String boardConfigFile;		//Game Board
 	private String roomConfigFile;		//Legend
