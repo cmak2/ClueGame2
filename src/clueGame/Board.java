@@ -107,13 +107,30 @@ public class Board {
 		}
 	}
 	
-	public void loadBoardConfig() {
+	public void loadBoardConfig() throws BadConfigFormatException,FileNotFoundException {
 	// Read each line, use comma separator to read Initial, name, card
 	//Store it to legend map
 	//Make another map for the "Card deck"
+		FileReader Reader = new FileReader(roomConfigFile);
+		Scanner in = new Scanner(Reader);
+		while (in.hasNextLine()) {
+			String line = in.nextLine();
+			String[] splitLine = line.split(",");
+			legend.put(splitLine[0].charAt(0),splitLine[1]);
+			if (splitLine[2] == "Card") {
+				formCardDeck(splitLine[1]);
+			}
+		}
+		try {
+			in.close();
+			Reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new BadConfigFormatException(e, "IOException: Failed to close file.");
+		}
 	}
 	
-	public void formCardDeck() {		//Method Stub for creating the Card Deck
+	public void formCardDeck(String card) {		//Method Stub for creating the Card Deck
 		
 	}
 	

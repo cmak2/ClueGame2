@@ -10,7 +10,7 @@ import java.text.*;
  *
  */
 
-public class BadConfigFormatException extends Exception{
+public class BadConfigFormatException extends Exception {
 	/**
 	 * 
 	 */
@@ -29,7 +29,9 @@ public class BadConfigFormatException extends Exception{
 		Date Data = new Date();
 		String currentTime = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Data);
 		System.out.println(msg);
-		writer.println(e + msg + " " + currentTime);
+		writer.println(e);
+		writer.println(msg);
+		writer.println(currentTime);
 		
 	}
 	
