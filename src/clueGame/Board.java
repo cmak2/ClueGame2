@@ -108,15 +108,82 @@ public class Board {
 	}
 	
 	public void loadBoardConfig() {
+	// Read each line, use comma separator to read Initial, name, card
+	//Store it to legend map
+	//Make another map for the "Card deck"
+	}
+	
+	public void formCardDeck() {		//Method Stub for creating the Card Deck
 		
 	}
 	
 	public void calcAdjacencies() {
+		// Checking if its an unreachable space is unnecessary currently since they don't have doors to access it. It is implied.
 		
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				BoardCell cell = getCell(i,j);
+				Set<BoardCell> adjList;
+				if ((i - 1) >= 0) {
+					BoardCell cell2 = getCell( i - 1, j);
+					cell2.getInitial();
+					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
+						if (cell2.getDoorDir() == DoorDirection.UP) {
+							adjList.add(cell2);
+						}
+					} else {						//Else check if its the same initial
+						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+							adjList.add(cell2);
+						}
+					}
+				} else if ((i + 1) <= (numRows - 1)) {
+					BoardCell cell2 = getCell( i + 1, j);
+					cell2.getInitial();
+					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
+						if (cell2.getDoorDir() == DoorDirection.DOWN) {
+							adjList.add(cell2);
+						}
+					} else {						//Else check if its the same initial
+						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+							adjList.add(cell2);
+						}
+					}
+				} else if ((j - 1) >= 0) {
+					BoardCell cell2 = getCell( i, j - 1);
+					cell2.getInitial();
+					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
+						if (cell2.getDoorDir() == DoorDirection.LEFT) {
+							adjList.add(cell2);
+						}
+					} else {						//Else check if its the same initial
+						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+							adjList.add(cell2);
+						}
+					}
+				} else if ((j + 1) <= (numRows - 1)) {
+					BoardCell cell2 = getCell( i, j + 1);
+					cell2.getInitial();
+					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
+						if (cell2.getDoorDir() == DoorDirection.RIGHT) {
+							adjList.add(cell2);
+						}
+					} else {						//Else check if its the same initial
+						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+							adjList.add(cell2);
+						}
+					}
+				}
+				adjMatrix[cell] = adjList;
+			}
+		}
 	}
 	
 	public void calcTargets(BoardCell cell, int pathLength) {
+		Set<BoardCell> visitedT;
+		//Use an algorithm of deduction and reduction. Stick to same initial unless there is a door.
+		//Start at the cell and branch out from each cardinal direction.
 		
+		//Check adjacency list of the cell, adjacency list will pre-filter rooms/walkways
 	}
 	
 	//Getters for JUnit testing
@@ -179,6 +246,8 @@ public class Board {
 	private Map<Character, String> legend;            //Initial to Room Map
 	private Map<BoardCell, Set<BoardCell>> adjMatrix; //All the adjacent spaces given a boardcell
 	private Set<BoardCell> targets;			//Calculates Targets in real-time based on the PathLength
+	private Set<BoardCell> visited;			//Will be called on initialize
+	private Set<Cards> CardDeck;			//Prepping, will make a card class
 	private BoardCell[][] grid;			//Game Board Grid Array. BoardCells have an initial from the legend and r,c which are corresponding rows and/or columns.
 	private String boardConfigFile;		//Game Board
 	private String roomConfigFile;		//Legend
