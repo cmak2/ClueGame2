@@ -53,7 +53,6 @@ public class Board {
 		roomConfigFile = filename2;					//Legend
 	}
 	
-	
 	//TODO: Figure out how to check MaxRows/MaxColumns
 	//Process Files
 	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException {
@@ -65,35 +64,41 @@ public class Board {
 		int _row = 0;
 		int _column = 0;
 		
-		//A check method to make sure it loaded correctly,
-		int maxRows = 0;
-		int maxColumns = 0;							
-		int currentMaxRow;
-		int currentMaxCol;
-		
 		// String Parser
 		try {
 			
 			br = new BufferedReader(new FileReader(boardConfigFile));
 			while ((ln = br.readLine()) != null) {
 				String[] Rooms = ln.split(splitString);
-				currentMaxCol = Rooms.length - 1;
-				
-				if (maxColumns == 0) { maxColumns = currentMaxCol; numColumns = maxColumns;}
-				if (maxColumns != currentMaxCol) {
-					
-					throw new BadConfigFormatException("Error Loading Game Board Data");
+				if(isStringAnInt(Rooms[Rooms.length - 1])) {
+					numColumns = Rooms.length - 1;
+					for (_column = 0; _column < Rooms.length - 1; _column++) {			//Last Row and Column are numbers
+						
+						BoardCell cell = new BoardCell(_row, _column, Rooms[_column]);
+						grid[_row][_column] = cell;
+						if (cell.isDoorway()) {
+							incDoors();
+						}
+						System.out.println(_row + " " +_column);
+					}
+				} else {
+					numColumns = Rooms.length;
+					for (_column = 0; _column < Rooms.length; _column++) {			//
+						
+						BoardCell cell = new BoardCell(_row, _column, Rooms[_column]);
+						grid[_row][_column] = cell;
+						if (cell.isDoorway()) {
+							incDoors();
+						}
+						System.out.println(_row + " " +_column);
+					}
 				}
 				
-				for (_column = 0; _column < Rooms.length - 1; _column++) {			//Last Row and Column are numbers
-					BoardCell cell = new BoardCell(_row, _column, Rooms[_column]);
-					grid[_row][_column] = cell;
-					System.out.println(_row + " " +_column);
-				}
 				
-				_row++;
-				
+				_row++;	
 			}
+			numRows = _row;
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			throw new BadConfigFormatException(e, "File Not Found");		//Log Exception
@@ -111,6 +116,15 @@ public class Board {
 			}
 		}
 		numRows = _row;
+	}
+	
+	public boolean isStringAnInt(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 	
 	public void loadBoardConfig() throws BadConfigFormatException,FileNotFoundException {
