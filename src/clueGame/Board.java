@@ -178,14 +178,15 @@ public class Board {
 		}
 	}
 	
-	public void calcTargets(BoardCell cell, int pathLength) throws BadConfigFormatException, FileNotFoundException {
+	public void calcTargets(BoardCell cell, int pathLength) {
 		Set<BoardCell> visitedT = null;
 		//Use an algorithm of deduction and reduction. Stick to same initial unless there is a door.
 		//Start at the cell and branch out from each cardinal direction.
 		visitedT.add(cell);
 		//Check adjacency list of the cell, adjacency list will pre-filter rooms/walkways
 		if (pathLength < 1) {
-			throw new BadConfigFormatException("Invalid pathLength value");
+			System.out.println("Invalid pathLength");
+			return;
 		}
 		recursiveCalcTargets(visitedT, pathLength, cell);
 	}
