@@ -186,6 +186,10 @@ public class Board {
 		//Check adjacency list of the cell, adjacency list will pre-filter rooms/walkways
 	}
 	
+	public void recursiveCalcTargets(Set<BoardCell> visit, int pathLength) {
+		
+	}
+	
 	//Getters for JUnit testing
 	
 	public BoardCell getCell(int r, int c) {
