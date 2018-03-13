@@ -45,6 +45,14 @@ public class BoardCell {
 		return false;
 	}
 	
+	public int getRow() {			//Returns Row value
+		return row;
+	}
+	
+	public int getColumn() {		//Returns Column Value
+		return column;
+	}
+	
 	public DoorDirection getDoorDir() {	//What Direction
 		if (initial.length() > 1)
 		{

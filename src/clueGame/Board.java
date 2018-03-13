@@ -54,7 +54,7 @@ public class Board {
 	
 	//TODO: Figure out how to check MaxRows/MaxColumns
 	//Process Files
-	public void loadRoomConfig() throws BadConfigFormatException {
+	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException {
 		
 		//Code replicated from https://www.mkyong.com Formal Citation at the Bottom
 		BufferedReader br = null;
@@ -91,10 +91,10 @@ public class Board {
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			throw new BadConfigFormatException("File Not Found");		//Log Exception
+			throw new BadConfigFormatException(e, "File Not Found");		//Log Exception
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new BadConfigFormatException("IOException");			//Log Exception
+			throw new BadConfigFormatException(e, "IOException");			//Log Exception
 		} finally {
 			if (br != null) {
 				try {
@@ -123,7 +123,7 @@ public class Board {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				BoardCell cell = getCell(i,j);
-				Set<BoardCell> adjList;
+				Set<BoardCell> adjList = null;
 				if ((i - 1) >= 0) {
 					BoardCell cell2 = getCell( i - 1, j);
 					cell2.getInitial();
@@ -132,7 +132,7 @@ public class Board {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
-						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					}
@@ -144,7 +144,7 @@ public class Board {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
-						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					}
@@ -156,7 +156,7 @@ public class Board {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
-						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					}
@@ -168,26 +168,50 @@ public class Board {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
-						if (cell2.getInitial().charAt(0) == cell.charAt(0)) {
+						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					}
 				}
-				adjMatrix[cell] = adjList;
+				adjMatrix.put(cell, adjList);
 			}
 		}
 	}
 	
-	public void calcTargets(BoardCell cell, int pathLength) {
-		Set<BoardCell> visitedT;
+	public void calcTargets(BoardCell cell, int pathLength) throws BadConfigFormatException, FileNotFoundException {
+		Set<BoardCell> visitedT = null;
 		//Use an algorithm of deduction and reduction. Stick to same initial unless there is a door.
 		//Start at the cell and branch out from each cardinal direction.
-		
+		visitedT.add(cell);
 		//Check adjacency list of the cell, adjacency list will pre-filter rooms/walkways
+		if (pathLength < 1) {
+			throw new BadConfigFormatException("Invalid pathLength value");
+		}
+		recursiveCalcTargets(visitedT, pathLength, cell);
 	}
 	
-	public void recursiveCalcTargets(Set<BoardCell> visit, int pathLength) {
-		
+	public void recursiveCalcTargets(Set<BoardCell> visit, int pathLength, BoardCell cell) { 		//Recursive method that calculates all the final targets
+		if (pathLength == 0) { System.out.println("Target Complete."); targets.add(cell); return; } //End of path, add target cell to targets Also the base case
+		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() + 1, cell.getColumn()))) {
+			BoardCell cell2 = getCell(cell.getRow() + 1, cell.getColumn());
+			visit.add(cell2);
+			recursiveCalcTargets(visit, pathLength - 1, cell2);
+		}
+		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() - 1, cell.getColumn()))) {
+			BoardCell cell2 = getCell(cell.getRow() - 1, cell.getColumn());
+			visit.add(cell2);
+			recursiveCalcTargets(visit, pathLength - 1, cell2);
+		}
+		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() + 1))) {
+			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() + 1);
+			visit.add(cell2);
+			recursiveCalcTargets(visit, pathLength - 1, cell2);
+		}
+		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() - 1))) {
+			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() - 1);
+			visit.add(cell2);
+			recursiveCalcTargets(visit, pathLength - 1, cell2);
+		}
 	}
 	
 	//Getters for JUnit testing
