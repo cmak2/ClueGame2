@@ -149,9 +149,11 @@ public class Board {
 				Set<BoardCell> adjList = null;
 				if ((i - 1) >= 0) {
 					BoardCell cell2 = getCell( i - 1, j);
-					cell2.getInitial();
+					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
 						if (cell2.getDoorDir() == DoorDirection.UP) {
+							adjList.add(cell2);
+						}  else if (cell2.getDoorDir() == DoorDirection.DOWN && initial.charAt(0) == cell2.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
@@ -161,9 +163,11 @@ public class Board {
 					}
 				} else if ((i + 1) <= (numRows - 1)) {
 					BoardCell cell2 = getCell( i + 1, j);
-					cell2.getInitial();
+					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
 						if (cell2.getDoorDir() == DoorDirection.DOWN) {
+							adjList.add(cell2);
+						}  else if (cell2.getDoorDir() == DoorDirection.UP && initial.charAt(0) == cell2.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
@@ -173,9 +177,11 @@ public class Board {
 					}
 				} else if ((j - 1) >= 0) {
 					BoardCell cell2 = getCell( i, j - 1);
-					cell2.getInitial();
+					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
-						if (cell2.getDoorDir() == DoorDirection.LEFT) {
+						if (cell2.getDoorDir() == DoorDirection.LEFT && initial.charAt(0) == 'W') {
+							adjList.add(cell2);
+						} else if (cell2.getDoorDir() == DoorDirection.RIGHT && initial.charAt(0) == cell2.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
@@ -185,9 +191,11 @@ public class Board {
 					}
 				} else if ((j + 1) <= (numRows - 1)) {
 					BoardCell cell2 = getCell( i, j + 1);
-					cell2.getInitial();
+					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
 						if (cell2.getDoorDir() == DoorDirection.RIGHT) {
+							adjList.add(cell2);
+						}  else if (cell2.getDoorDir() == DoorDirection.LEFT && initial.charAt(0) == cell2.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
@@ -219,21 +227,33 @@ public class Board {
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() + 1, cell.getColumn()))) {
 			BoardCell cell2 = getCell(cell.getRow() + 1, cell.getColumn());
 			visit.add(cell2);
+			if (cell2.isDoorway()) {																//Target Stops at a Doorway
+				recursiveCalcTargets(visit, 0, cell2);
+			}
 			recursiveCalcTargets(visit, pathLength - 1, cell2);
 		}
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() - 1, cell.getColumn()))) {
 			BoardCell cell2 = getCell(cell.getRow() - 1, cell.getColumn());
 			visit.add(cell2);
+			if (cell2.isDoorway()) {
+				recursiveCalcTargets(visit, 0, cell2);
+			}
 			recursiveCalcTargets(visit, pathLength - 1, cell2);
 		}
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() + 1))) {
 			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() + 1);
 			visit.add(cell2);
+			if (cell2.isDoorway()) {
+				recursiveCalcTargets(visit, 0, cell2);
+			}
 			recursiveCalcTargets(visit, pathLength - 1, cell2);
 		}
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() - 1))) {
 			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() - 1);
 			visit.add(cell2);
+			if (cell2.isDoorway()) {
+				recursiveCalcTargets(visit, 0, cell2);
+			}
 			recursiveCalcTargets(visit, pathLength - 1, cell2);
 		}
 	}
