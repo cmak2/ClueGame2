@@ -77,7 +77,7 @@ public class Board {
 	
 	//TODO: Figure out how to check MaxRows/MaxColumns
 	//Process Files
-	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException, NullPointerException {
+	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException {
 		
 		//Code replicated from https://www.mkyong.com Formal Citation at the Bottom
 		BufferedReader br = null;
@@ -152,7 +152,7 @@ public class Board {
 		}
 	}
 	
-	public void loadRoomConfig() throws BadConfigFormatException,FileNotFoundException, NullPointerException {
+	public void loadRoomConfig() throws BadConfigFormatException,FileNotFoundException {
 	// Read each line, use comma separator to read Initial, name, card
 	//Store it to legend map
 	//Make another map for the "Card deck"
