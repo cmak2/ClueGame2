@@ -32,14 +32,14 @@ public class IntBoard {
 	
 	//Default Constructor
 	IntBoard() {
-		gameSetting = Setting.STREAMLOAD;
+		//gameSetting = Setting.STREAMLOAD;
 		grid = new BoardCell[3][3];
 		calcAdjacencies();
 		init();
 	}
 	
 	IntBoard(char c) {
-		setSetting(c);
+		//setSetting(c);
 	}
 	
 	void init() {					//Temporary Stub to initialize game
@@ -48,7 +48,7 @@ public class IntBoard {
 	
 	//Calculates the Adjacency list for each grid Cell and stores results in a map
 	void calcAdjacencies() {
-		Set<BoardCell> adjList = null;
+		Set<BoardCell> adjList = new HashSet<BoardCell>();
 		
 		if (cell.row - 1 >= 0 && cell.row - 1 < grid.length) {			//All columns will have same max length so 0 is ok for a default value
 			if (cell.column - 1 >= 0 && cell.column - 1 < grid[0].length) {
@@ -101,10 +101,10 @@ public class IntBoard {
 	}
 	
 	//Game Options
-	void setSetting(char c) {
+/*	void setSetting(char c) {
 		if (c == 'p') { gameSetting = Setting.PRELOAD; }
 		else { gameSetting = Setting.STREAMLOAD; }
-	}
+	}*/
 	
 	//Returns a list of targets as a set
 	Set<BoardCell> getTargets() {
@@ -115,10 +115,10 @@ public class IntBoard {
 
 	//Adjacent Matrix
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private Set<BoardCell> visited;
+//	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private BoardCell[][] grid;		//The Board Grid
 	//private Map<int, Set<BoardCell>> TotalTargets;
 	private BoardCell cell;			//Keeps track of current cell
-	private Setting gameSetting;	
+//	private Setting gameSetting;	
 }

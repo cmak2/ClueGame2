@@ -1,6 +1,6 @@
 package clueGame;
 
-import java.awt.*;
+//import java.awt.*;
 import java.util.*;
 import java.io.*;
 
@@ -35,7 +35,29 @@ public class Board {
 	}
 	
 	//Initialize
-	public void initialize() {	
+	public void initialize(){
+		
+		//Initialize Variables
+		    legend = new HashMap<Character, String>();            //Initial to Room Map
+			adjMatrix = new HashMap<BoardCell, Set<BoardCell>>(); //All the adjacent spaces given a boardcell
+			targets = new HashSet<BoardCell>();			//Calculates Targets in real-time based on the PathLength
+
+		//Testing
+		/*for (int i = 0; i < 12; i++) {
+			legend.put('C', "Conservatory");
+			legend.put('B', "Ballroom");
+			legend.put('R', "Billiard Room");
+		}*/
+			
+		try {
+			loadBoardConfig();
+			loadRoomConfig();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (BadConfigFormatException e) {
+			e = new BadConfigFormatException(e, "BadFormatException");
+		}
+		calcAdjacencies();
 		
 	}
 	
@@ -55,7 +77,7 @@ public class Board {
 	
 	//TODO: Figure out how to check MaxRows/MaxColumns
 	//Process Files
-	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException {
+	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException, NullPointerException {
 		
 		//Code replicated from https://www.mkyong.com Formal Citation at the Bottom
 		BufferedReader br = null;
@@ -105,6 +127,9 @@ public class Board {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new BadConfigFormatException(e, "IOException");			//Log Exception
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			throw new BadConfigFormatException(e, "NullPointerException");
 		} finally {
 			if (br != null) {
 				try {
@@ -127,7 +152,7 @@ public class Board {
 		}
 	}
 	
-	public void loadBoardConfig() throws BadConfigFormatException,FileNotFoundException {
+	public void loadRoomConfig() throws BadConfigFormatException,FileNotFoundException, NullPointerException {
 	// Read each line, use comma separator to read Initial, name, card
 	//Store it to legend map
 	//Make another map for the "Card deck"
@@ -136,6 +161,12 @@ public class Board {
 		while (in.hasNextLine()) {
 			String line = in.nextLine();
 			String[] splitLine = line.split(",");
+			if(splitLine[0].length() > 1) {
+				throw new BadConfigFormatException("Improper Legend Format.");
+			}
+			if(splitLine[2] != "Card" || splitLine[2] != "Other") {
+				throw new BadConfigFormatException("Improper Legend Format.");
+			}
 			legend.put(splitLine[0].charAt(0),splitLine[1]);
 			if (splitLine[2] == "Card") {
 				formCardDeck(splitLine[1]);
@@ -160,7 +191,7 @@ public class Board {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				BoardCell cell = getCell(i,j);
-				Set<BoardCell> adjList = null;
+				Set<BoardCell> adjList = new HashSet<BoardCell>();
 				if ((i - 1) >= 0) {
 					BoardCell cell2 = getCell( i - 1, j);
 					String initial = cell2.getInitial();
@@ -224,7 +255,7 @@ public class Board {
 	}
 	
 	public void calcTargets(BoardCell cell, int pathLength) {
-		Set<BoardCell> visitedT = null;
+		Set<BoardCell> visitedT = new HashSet<BoardCell>();
 		//Use an algorithm of deduction and reduction. Stick to same initial unless there is a door.
 		//Start at the cell and branch out from each cardinal direction.
 		visitedT.add(cell);
@@ -237,7 +268,7 @@ public class Board {
 	}
 	
 	public void calcTargets(int r, int c, int pathLength) {
-		Set<BoardCell> visitedT = null;
+		Set<BoardCell> visitedT = new HashSet<BoardCell>();
 		//Use an algorithm of deduction and reduction. Stick to same initial unless there is a door.
 		//Start at the cell and branch out from each cardinal direction.
 		BoardCell cell = grid[r][c];
@@ -347,12 +378,12 @@ public class Board {
 	private int numDoors;				//For Testing
 
 	private static Board boardz;
-	private BoardCell board;
+	//private BoardCell board;
 	private Map<Character, String> legend;            //Initial to Room Map
 	private Map<BoardCell, Set<BoardCell>> adjMatrix; //All the adjacent spaces given a boardcell
 	private Set<BoardCell> targets;			//Calculates Targets in real-time based on the PathLength
-	private Set<BoardCell> visited;			//Will be called on initialize
-	private Set<Cards> CardDeck;			//Prepping, will make a card class
+	//private Set<BoardCell> visited;			//Will be called on initialize
+	//private Set<Cards> CardDeck;			//Prepping, will make a card class
 	private BoardCell[][] grid;			//Game Board Grid Array. BoardCells have an initial from the legend and r,c which are corresponding rows and/or columns.
 	private String boardConfigFile;		//Game Board
 	private String roomConfigFile;		//Legend
