@@ -202,8 +202,8 @@ public class Board {
 	
 	public void calcAdjacencies() {
 		// Checking if its an unreachable space is unnecessary currently since they don't have doors to access it. It is implied.
-		
-		for (int i = 0; i < numRows; i++) {
+		return;
+		/*for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				BoardCell cell = getCell(i,j);
 				Set<BoardCell> adjList = new HashSet<BoardCell>();
@@ -270,7 +270,7 @@ public class Board {
 				}
 				adjMatrix.put(cell, adjList);
 			}
-		}
+		}*/
 	}
 	
 	public void calcTargets(BoardCell cell, int pathLength) {
