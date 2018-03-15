@@ -1,0 +1,11 @@
+
+For Doors, I tested various situations.
+I tested the common "is it facing the proper direction".
+Some Doors are on corners, but open one way.
+Some doors are side by side and facing the same direction.
+There is one room where there are two doors that opens up and two doors that open down.
+I also checked if a cell was called a door.
+
+For the Legend, I tested the first and last element.
+I also tested the longest value and a value with a symbol in case syntax might throw it off.
+I checked to make sure a cell outside the range isn't a door/cell.
