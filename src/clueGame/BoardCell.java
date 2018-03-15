@@ -2,7 +2,7 @@ package clueGame;
 
 /**
  * 
- * @author 
+ * @author Calvin Mak
  *
  */
 
