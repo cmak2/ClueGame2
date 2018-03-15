@@ -50,8 +50,8 @@ public class Board {
 		}*/
 			
 		try {
-			loadBoardConfig();
 			loadRoomConfig();
+			loadBoardConfig();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (BadConfigFormatException e) {
@@ -96,23 +96,26 @@ public class Board {
 					numColumns = Rooms.length - 1;
 					for (_column = 0; _column < Rooms.length - 1; _column++) {			//Last Row and Column are numbers
 						
-						BoardCell cell = new BoardCell(_row, _column, Rooms[_column]);
-						grid[_row][_column] = cell;
+						BoardCell cell = new BoardCell(_row, _column, Rooms[_column].toUpperCase());
+						if (legend.get(Rooms[_column]) == null) {						//Room Initials not in Legend
+							throw new BadConfigFormatException("Cannot find Room in Legend Config: " + Rooms[_column]);
+						}
+						grid[_row][_column] = cell;						//Insert Cell
 						if (cell.isDoorway()) {
 							incDoors();
 						}
-						System.out.println(_row + " " +_column);
+						//System.out.println(_row + " " +_column);
 					}
 				} else {
 					numColumns = Rooms.length;
 					for (_column = 0; _column < Rooms.length; _column++) {			//
 						
-						BoardCell cell = new BoardCell(_row, _column, Rooms[_column]);
-						grid[_row][_column] = cell;
+						BoardCell cell = new BoardCell(_row, _column, Rooms[_column].toUpperCase());
+						grid[_row][_column] = cell;						//Insert Cell
 						if (cell.isDoorway()) {
 							incDoors();
 						}
-						System.out.println(_row + " " +_column);
+						//System.out.println(_row + " " +_column);
 					}
 				}
 				
@@ -164,10 +167,14 @@ public class Board {
 			if(splitLine[0].length() > 1) {
 				throw new BadConfigFormatException("Improper Legend Format.");
 			}
-			if(splitLine[2] != "Card" || splitLine[2] != "Other") {
+			if(splitLine[2].toLowerCase() != "card" || splitLine[2].toLowerCase() != "other") {
 				throw new BadConfigFormatException("Improper Legend Format.");
 			}
-			legend.put(splitLine[0].charAt(0),splitLine[1]);
+			if (splitLine[0] == null || splitLine[1] == null || splitLine[2] == null) {
+				throw new BadConfigFormatException("Null value detected.");
+			}
+			legend.put(splitLine[0].toUpperCase().charAt(0),splitLine[1]);					//Inserts to Legend Map
+			
 			if (splitLine[2] == "Card") {
 				formCardDeck(splitLine[1]);
 			}
@@ -185,6 +192,8 @@ public class Board {
 		
 	}
 	
+	//Door Direction is the direction to enter the door from i.e DoorDirection.UP means enter from up
+	
 	public void calcAdjacencies() {
 		// Checking if its an unreachable space is unnecessary currently since they don't have doors to access it. It is implied.
 		
@@ -192,13 +201,13 @@ public class Board {
 			for (int j = 0; j < numColumns; j++) {
 				BoardCell cell = getCell(i,j);
 				Set<BoardCell> adjList = new HashSet<BoardCell>();
-				if ((i - 1) >= 0) {
+				if ((i - 1) >= 0) {							//Within confines of the board
 					BoardCell cell2 = getCell( i - 1, j);
 					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
-						if (cell2.getDoorDir() == DoorDirection.UP) {
+						if (cell2.getDoorDir() == DoorDirection.DOWN && initial.charAt(0) == 'W') {															  //Entering a Room
 							adjList.add(cell2);
-						}  else if (cell2.getDoorDir() == DoorDirection.DOWN && initial.charAt(0) == cell2.getInitial().charAt(0)) {
+						}  else if (cell2.getDoorDir() == DoorDirection.UP && initial.charAt(0) == cell.getInitial().charAt(0)) { //Leaving a Room
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
@@ -384,7 +393,7 @@ public class Board {
 	private Set<BoardCell> targets;			//Calculates Targets in real-time based on the PathLength
 	//private Set<BoardCell> visited;			//Will be called on initialize
 	//private Set<Cards> CardDeck;			//Prepping, will make a card class
-	private BoardCell[][] grid;			//Game Board Grid Array. BoardCells have an initial from the legend and r,c which are corresponding rows and/or columns.
+	private BoardCell[][] grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];			//Game Board Grid Array. BoardCells have an initial from the legend and r,c which are corresponding rows and/or columns.
 	private String boardConfigFile;		//Game Board
 	private String roomConfigFile;		//Legend
 }
