@@ -270,6 +270,7 @@ public class Board {
 	}
 	
 	public void calcTargets(BoardCell cell, int pathLength) {
+		targets = new HashSet<BoardCell>();
 		Set<BoardCell> visitedT = new HashSet<BoardCell>();
 		//Use an algorithm of deduction and reduction. Stick to same initial unless there is a door.
 		//Start at the cell and branch out from each cardinal direction.
@@ -311,6 +312,7 @@ public class Board {
 		//Bottom Cell
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() + 1, cell.getColumn()))) {	    //Check if adjacency has a space below cell
 			BoardCell cell2 = getCell(cell.getRow() + 1, cell.getColumn());
+			if (visit.contains(cell2)) { return; }	//Skip if went backwards
 			visit.add(cell2);
 			if (cell2.isDoorway()) {																//Target Stops at a Doorway
 				recursiveCalcTargets(visit, 0, cell2);												//Adjacency List calculates the walls
@@ -321,6 +323,7 @@ public class Board {
 		//Top Cell
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() - 1, cell.getColumn()))) {
 			BoardCell cell2 = getCell(cell.getRow() - 1, cell.getColumn());
+			if (visit.contains(cell2)) { return; }	//Skip if went backwards
 			visit.add(cell2);
 			if (cell2.isDoorway()) {
 				recursiveCalcTargets(visit, 0, cell2);
@@ -331,6 +334,7 @@ public class Board {
 		//Right Cell
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() + 1))) {
 			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() + 1);
+			if (visit.contains(cell2)) { return; }	//Skip if went backwards
 			visit.add(cell2);
 			if (cell2.isDoorway()) {
 				recursiveCalcTargets(visit, 0, cell2);
@@ -341,6 +345,7 @@ public class Board {
 		//Left Cell
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() - 1))) {
 			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() - 1);
+			if (visit.contains(cell2)) { return; }	//Skip if went backwards
 			visit.add(cell2);
 			if (cell2.isDoorway()) {
 				recursiveCalcTargets(visit, 0, cell2);
