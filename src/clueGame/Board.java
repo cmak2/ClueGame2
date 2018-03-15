@@ -159,32 +159,38 @@ public class Board {
 	// Read each line, use comma separator to read Initial, name, card
 	//Store it to legend map
 	//Make another map for the "Card deck"
-		FileReader Reader = new FileReader(roomConfigFile);
-		Scanner in = new Scanner(Reader);
-		while (in.hasNextLine()) {
-			String line = in.nextLine();
-			String[] splitLine = line.split(",");
-			if(splitLine[0].length() > 1) {
-				throw new BadConfigFormatException("Improper Legend Format.");
-			}
-			if(splitLine[2].toLowerCase() != "card" || splitLine[2].toLowerCase() != "other") {
-				throw new BadConfigFormatException("Improper Legend Format.");
-			}
-			if (splitLine[0] == null || splitLine[1] == null || splitLine[2] == null) {
-				throw new BadConfigFormatException("Null value detected.");
-			}
-			legend.put(splitLine[0].toUpperCase().charAt(0),splitLine[1]);					//Inserts to Legend Map
-			
-			if (splitLine[2] == "Card") {
-				formCardDeck(splitLine[1]);
-			}
-		}
 		try {
+			FileReader Reader = new FileReader(roomConfigFile);
+			@SuppressWarnings("resource")
+			Scanner in = new Scanner(Reader);
+			while (in.hasNextLine()) {
+				String line = in.nextLine();
+				String[] splitLine = line.split(",");
+				if(splitLine[0].length() > 1) {
+					throw new BadConfigFormatException("Improper Legend Format.");
+				}
+				if(splitLine[2].toLowerCase() != "card" || splitLine[2].toLowerCase() != "other") {
+					throw new BadConfigFormatException("Improper Legend Format.");
+				}
+				if (splitLine[0] == null || splitLine[1] == null || splitLine[2] == null) {
+					throw new BadConfigFormatException("Null value detected.");
+				}	
+				legend.put(splitLine[0].toUpperCase().charAt(0),splitLine[1]);					//Inserts to Legend Map
+				
+				if (splitLine[2] == "Card") {
+					formCardDeck(splitLine[1]);
+				}
+			}
 			in.close();
-			Reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new BadConfigFormatException(e, "IOException: Failed to close file.");
+			try {
+				Reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new BadConfigFormatException(e, "IOException: Failed to close file.");
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("File Not Found");
+			throw new FileNotFoundException();
 		}
 	}
 	
@@ -205,7 +211,7 @@ public class Board {
 					BoardCell cell2 = getCell( i - 1, j);
 					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
-						if (cell2.getDoorDir() == DoorDirection.DOWN && initial.charAt(0) == 'W') {															  //Entering a Room
+						if (cell2.getDoorDir() == DoorDirection.DOWN && initial.charAt(0) == 'W') {								  //Entering																				  //Entering a Room
 							adjList.add(cell2);
 						}  else if (cell2.getDoorDir() == DoorDirection.UP && initial.charAt(0) == cell.getInitial().charAt(0)) { //Leaving a Room
 							adjList.add(cell2);
@@ -219,9 +225,9 @@ public class Board {
 					BoardCell cell2 = getCell( i + 1, j);
 					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
-						if (cell2.getDoorDir() == DoorDirection.DOWN) {
+						if (cell2.getDoorDir() == DoorDirection.UP && initial.charAt(0) == 'W') {
 							adjList.add(cell2);
-						}  else if (cell2.getDoorDir() == DoorDirection.UP && initial.charAt(0) == cell2.getInitial().charAt(0)) {
+						}  else if (cell2.getDoorDir() == DoorDirection.DOWN && initial.charAt(0) == cell.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
@@ -233,9 +239,9 @@ public class Board {
 					BoardCell cell2 = getCell( i, j - 1);
 					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
-						if (cell2.getDoorDir() == DoorDirection.LEFT && initial.charAt(0) == 'W') {
+						if (cell2.getDoorDir() == DoorDirection.RIGHT && initial.charAt(0) == 'W') {
 							adjList.add(cell2);
-						} else if (cell2.getDoorDir() == DoorDirection.RIGHT && initial.charAt(0) == cell2.getInitial().charAt(0)) {
+						} else if (cell2.getDoorDir() == DoorDirection.LEFT && initial.charAt(0) == cell.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
@@ -247,9 +253,9 @@ public class Board {
 					BoardCell cell2 = getCell( i, j + 1);
 					String initial = cell2.getInitial();
 					if(cell2.isDoorway()) {					//Add to adjacent list if direction is appropriate
-						if (cell2.getDoorDir() == DoorDirection.RIGHT) {
+						if (cell2.getDoorDir() == DoorDirection.LEFT && initial.charAt(0) == 'W') {
 							adjList.add(cell2);
-						}  else if (cell2.getDoorDir() == DoorDirection.LEFT && initial.charAt(0) == cell2.getInitial().charAt(0)) {
+						}  else if (cell2.getDoorDir() == DoorDirection.RIGHT && initial.charAt(0) == cell.getInitial().charAt(0)) {
 							adjList.add(cell2);
 						}
 					} else {						//Else check if its the same initial
