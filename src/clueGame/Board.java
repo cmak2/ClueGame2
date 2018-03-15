@@ -218,7 +218,8 @@ public class Board {
 						}
 					} else {						//Else check if its the same initial
 						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
-							adjList.add(cell2);
+							if (cell.getInitial().charAt(0) == 'W')				//Ignore moving in rooms for now 
+								adjList.add(cell2);
 						}
 					}
 				} else if ((i + 1) <= (numRows - 1)) {
@@ -232,7 +233,8 @@ public class Board {
 						}
 					} else {						//Else check if its the same initial
 						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
-							adjList.add(cell2);
+							if (cell.getInitial().charAt(0) == 'W')				//Ignore moving in rooms for now 
+								adjList.add(cell2);
 						}
 					}
 				} else if ((j - 1) >= 0) {
@@ -246,7 +248,8 @@ public class Board {
 						}
 					} else {						//Else check if its the same initial
 						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
-							adjList.add(cell2);
+							if (cell.getInitial().charAt(0) == 'W')				//Ignore moving in rooms for now 
+								adjList.add(cell2);
 						}
 					}
 				} else if ((j + 1) <= (numRows - 1)) {
@@ -260,7 +263,8 @@ public class Board {
 						}
 					} else {						//Else check if its the same initial
 						if (cell2.getInitial().charAt(0) == cell.getInitial().charAt(0)) {
-							adjList.add(cell2);
+							if (cell.getInitial().charAt(0) == 'W')				//Ignore moving in rooms for now 
+								adjList.add(cell2);
 						}
 					}
 				}
@@ -280,7 +284,8 @@ public class Board {
 			System.out.println("Invalid pathLength");
 			return;
 		}
-		recursiveCalcTargets(visitedT, pathLength, cell);
+		//recursiveCalcTargets(visitedT, pathLength, cell);
+		return;
 	}
 	
 	public void calcTargets(int r, int c, int pathLength) {
@@ -294,7 +299,8 @@ public class Board {
 			System.out.println("Invalid pathLength");
 			return;
 		}
-		recursiveCalcTargets(visitedT, pathLength, cell);
+		//recursiveCalcTargets(visitedT, pathLength, cell);
+		return;
 	}
 	
 	/*
