@@ -296,16 +296,29 @@ public class Board {
 		recursiveCalcTargets(visitedT, pathLength, cell);
 	}
 	
+	/*
+	 * Key:
+	 * 						-
+	 * 					-  Cell +
+	 * 						+
+	 *  
+	 */		
+	
 	public void recursiveCalcTargets(Set<BoardCell> visit, int pathLength, BoardCell cell) { 		//Recursive method that calculates all the final targets
 		if (pathLength == 0) { System.out.println("Target Complete."); targets.add(cell); return; } //End of path, add target cell to targets Also the base case
-		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() + 1, cell.getColumn()))) {
+		
+		
+		//Bottom Cell
+		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() + 1, cell.getColumn()))) {	    //Check if adjacency has a space below cell
 			BoardCell cell2 = getCell(cell.getRow() + 1, cell.getColumn());
 			visit.add(cell2);
 			if (cell2.isDoorway()) {																//Target Stops at a Doorway
-				recursiveCalcTargets(visit, 0, cell2);
+				recursiveCalcTargets(visit, 0, cell2);												//Adjacency List calculates the walls
 			}
 			recursiveCalcTargets(visit, pathLength - 1, cell2);
 		}
+		
+		//Top Cell
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow() - 1, cell.getColumn()))) {
 			BoardCell cell2 = getCell(cell.getRow() - 1, cell.getColumn());
 			visit.add(cell2);
@@ -314,6 +327,8 @@ public class Board {
 			}
 			recursiveCalcTargets(visit, pathLength - 1, cell2);
 		}
+		
+		//Right Cell
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() + 1))) {
 			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() + 1);
 			visit.add(cell2);
@@ -322,6 +337,8 @@ public class Board {
 			}
 			recursiveCalcTargets(visit, pathLength - 1, cell2);
 		}
+		
+		//Left Cell
 		if (adjMatrix.get(cell).contains(new BoardCell(cell.getRow(), cell.getColumn() - 1))) {
 			BoardCell cell2 = getCell(cell.getRow(), cell.getColumn() - 1);
 			visit.add(cell2);
